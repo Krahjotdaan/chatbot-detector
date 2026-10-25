@@ -149,8 +149,6 @@ class CnnMlpModel(BaseModel):
 
     def _tensors(self, X):
         text, num = _split_text_numeric(X)
-        if num is None or num.shape[1] == 0 or self._scaler is None:
-            raise ValueError("cnn_mlp требует числовые фичи вместе с текстом")
         seqs = torch.from_numpy(_encode(list(text), self._vocab, self.max_len))
         hc = torch.from_numpy(self._scaler.transform(num).astype(np.float32))
         return seqs, hc

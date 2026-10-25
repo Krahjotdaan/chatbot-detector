@@ -14,7 +14,13 @@ from src.bot_detector.cv import get_splits
 from src.bot_detector.data import load_split, participant_texts
 from src.bot_detector.features import NUMERIC_FEATURE_COLS, build_features
 from src.bot_detector.metrics import compute_classification_metrics
-from src.bot_detector.models import BaseModel, CnnMlpModel, LGBMTfidfModel, TfidfLogRegModel
+from src.bot_detector.models import (
+    BaseModel,
+    CnnMlpModel,
+    LGBMTfidfModel,
+    RnnMlpModel,
+    TfidfLogRegModel,
+)
 
 REQUIRED_DATA_FILES = ["train.json", "test.json", "ytrain.csv", "ytest.csv"]
 
@@ -41,6 +47,8 @@ def build_model(name: str, cfg: Config) -> BaseModel:
     params = cfg["models"].get(name, {})
     if name == "cnn_mlp":
         return CnnMlpModel(random_state=cfg["seed"], **params)
+    if name == "lstm_mlp" or name == "gru_mlp":
+        return RnnMlpModel(random_state=cfg["seed"], **params)
     vec = dict(params.get("vectorizer", {}))
     clf = dict(params.get("clf", {}))
     if name == "tfidf_logreg":

@@ -7,9 +7,15 @@ try:
 except ImportError:
     CnnMlpModel = None
 
+try:
+    from .rnn_mlp import RnnMlpModel
+except ImportError:
+    RnnMlpModel = None
+
 __all__ = [
     "BaseModel",
     "LGBMTfidfModel",
     "TfidfLogRegModel",
     "CnnMlpModel",
+    "RnnMlpModel",
 ]

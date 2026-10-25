@@ -1,0 +1,49 @@
+seed: 42
+
+cv:
+  n_splits: 5
+
+paths:
+  data_dir: data
+  runs_dir: runs
+  train_json: data/train.json
+  test_json: data/test.json
+  train_csv: data/ytrain.csv
+  test_csv: data/ytest.csv
+
+mlflow:
+  tracking_uri: http://127.0.0.1:5000
+  experiment_name: bot-detector
+
+experiments:
+  - lstm_mlp
+  - gru_mlp
+
+models:
+  lstm_mlp:
+    rnn_type: lstm
+    hidden_size: 64
+    num_layers: 1
+    max_len: 256
+    vocab_size: 20000
+    embed_dim: 128
+    hidden_hc: 8
+    epochs: 20
+    batch_size: 64
+    lr: 0.001
+    patience: 3
+    class_weight: balanced
+
+  gru_mlp:
+    rnn_type: gru
+    hidden_size: 64
+    num_layers: 1
+    max_len: 256
+    vocab_size: 20000
+    embed_dim: 128
+    hidden_hc: 8
+    epochs: 20
+    batch_size: 64
+    lr: 0.001
+    patience: 3
+    class_weight: balanced
