@@ -19,18 +19,21 @@ dev = [
     "ruff>=0.5",
 ]
 bert = [
-    "torch>=2.4",
+    "torch>=2.7",
     "transformers>=4.44",
     "safetensors>=0.4",
 ]
+nn = [
+    "torch>=2.7",
+]
 
 [[tool.uv.index]]
-name = "pytorch-cu121"
-url = "https://download.pytorch.org/whl/cu121"
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
 explicit = true
 
 [tool.uv.sources]
-torch = { index = "pytorch-cu121" }
+torch = { index = "pytorch-cu128" }
 
 [tool.ruff]
 line-length = 100
