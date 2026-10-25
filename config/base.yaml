@@ -1,0 +1,48 @@
+seed: 42
+
+cv:
+  n_splits: 5
+
+paths:
+  data_dir: data
+  runs_dir: runs
+  train_json: data/train.json
+  test_json: data/test.json
+  train_csv: data/ytrain.csv
+  test_csv: data/ytest.csv
+
+mlflow:
+  tracking_uri: http://127.0.0.1:5000
+  experiment_name: bot-detector
+
+experiments:
+  - tfidf_logreg
+  - lgbm_tfidf
+
+models:
+  tfidf_logreg:
+    vectorizer:
+      analyzer: char_wb
+      ngram_range: [2, 5]
+      max_features: 20000
+      sublinear_tf: true
+    clf:
+      C: 1.0
+      max_iter: 1000
+      class_weight: balanced
+  lgbm_tfidf:
+    vectorizer:
+      analyzer: word
+      ngram_range: [1, 2]
+      max_features: 50000
+      sublinear_tf: true
+    clf:
+      n_estimators: 500
+      learning_rate: 0.05
+      num_leaves: 31
+      min_child_samples: 20
+      subsample: 0.9
+      subsample_freq: 1
+      colsample_bytree: 0.9
+      class_weight: balanced
+      early_stopping_rounds: 50
