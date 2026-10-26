@@ -16,6 +16,7 @@ from src.bot_detector.features import NUMERIC_FEATURE_COLS, build_features
 from src.bot_detector.metrics import compute_classification_metrics
 from src.bot_detector.models import (
     BaseModel,
+    BertLGBMModel,
     CnnMlpModel,
     LGBMTfidfModel,
     RnnMlpModel,
@@ -55,6 +56,9 @@ def build_model(name: str, cfg: Config) -> BaseModel:
         return TfidfLogRegModel(random_state=cfg["seed"], **vec, **clf)
     if name == "lgbm_tfidf":
         return LGBMTfidfModel(random_state=cfg["seed"], **vec, **clf)
+    if name == "bert_lgbm":
+        bert = {k: v for k, v in params.items() if k not in ("vectorizer", "clf")}
+        return BertLGBMModel(random_state=cfg["seed"], **bert, **vec, **clf)
     raise ValueError(f"unknown model: {name}")
 
 

@@ -1,0 +1,51 @@
+seed: 42
+
+cv:
+  n_splits: 5
+
+paths:
+  data_dir: data
+  runs_dir: runs
+  train_json: data/train.json
+  test_json: data/test.json
+  train_csv: data/ytrain.csv
+  test_csv: data/ytest.csv
+
+mlflow:
+  tracking_uri: http://127.0.0.1:5000
+  experiment_name: bot-detector
+
+experiments:
+  - bert_lgbm
+
+models:
+  bert_lgbm:
+    bert_model_name: cointegrated/rubert-tiny2
+    max_len: 256
+    bert_epochs: 4
+    bert_batch_size: 16
+    bert_lr: 2.0e-5
+    weight_decay: 0.01
+    warmup_ratio: 0.1
+    grad_clip: 1.0
+    bert_patience: 2
+    pooling: mean 
+    freeze_layers: 0
+    bert_class_weight: balanced
+
+    vectorizer:
+      analyzer: word
+      ngram_range: [1, 3]
+      max_features: 300000
+      sublinear_tf: true
+
+    clf:
+      n_estimators: 2000
+      learning_rate: 0.03
+      num_leaves: 63
+      min_child_samples: 20
+      subsample: 0.9
+      subsample_freq: 1
+      colsample_bytree: 0.8
+      class_weight: balanced
+      early_stopping_rounds: 100
